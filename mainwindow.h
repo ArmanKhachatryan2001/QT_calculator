@@ -83,7 +83,6 @@ private:
     bool flagIncrease = false;
     std::vector<int> fontsizemin;
 
-
     bool flag = false;
     bool check = false;
     char sign;
