@@ -171,7 +171,7 @@ void MainWindow::helperIncreaserNumber(int value) {
 }
 
 void MainWindow::calculate() {
-    if (corectCode) {
+    if (corectCode && sign != ',') {
         QString str;
         str = resultLabel -> text();
         result = str.toInt();
@@ -179,21 +179,25 @@ void MainWindow::calculate() {
         check = true;
         return;
     }
-        QString str;
-        str = resultLabel -> text();
-        if (sign == '+') {
-            result += str.toInt();
-        } else if (sign == '-') {
-            result -= str.toInt();
-        } else if (sign == '*') {
-            result *= str.toInt();
-        } else if (sign == '/') {
-            result /= str.toInt();
-        } else if (sign == '%') {
-            result %= str.toInt();
-        } else {
-            return;
-        }
+    QString str;
+    str = resultLabel -> text();
+    if (sign == '+') {
+        result += str.toInt();
+    } else if (sign == '-') {
+        result -= str.toInt();
+    } else if (sign == '*') {
+        result *= str.toInt();
+    } else if (sign == '/') {
+        result /= str.toInt();
+    } else if (sign == '%') {
+        result %= str.toInt();
+    } else if (sign == ',') {
+        resultLabel -> clear();
+        resultLabel -> setText(str + ".");
+        return;
+    } else {
+        return;
+    }
     this -> resultLabel -> clear();
     resultLabel -> setText(QString::number(result));
     this -> check = true;
@@ -278,7 +282,10 @@ void MainWindow::ZERObuttonClick() {
 }
 
 void MainWindow::COMMAbuttonClick() {
-    this -> resultLabel -> setText(QString::number(','));
+    sign = ',';
+    calculate();
+    sign = '_';
+    subcheck = false;
 }
 
 void MainWindow::EQUALbuttonClick() {
@@ -321,8 +328,5 @@ MainWindow::~MainWindow()
     delete buttonZERO;
     delete buttonCOMMA;
     delete buttonEQUAL;
-
     delete resultLabel;
-
 }
-
